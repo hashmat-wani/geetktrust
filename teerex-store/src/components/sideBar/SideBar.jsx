@@ -10,14 +10,17 @@ import {
 import Color from "./Color";
 import Gender from "./Gender";
 import Price from "./Price";
-import { Wrapper } from "./sideBar.style";
+import { Header, Wrapper } from "./sideBar.style";
 import Type from "./Type";
 
 const SideBar = ({ open, setOpen }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const isMobile = useMediaQuery("(max-width:899px)");
 
-  const { filters } = useSelector((state) => state.products, shallowEqual);
+  const { products, filters } = useSelector(
+    (state) => state.products,
+    shallowEqual
+  );
 
   const dispatch = useDispatch();
 
@@ -53,14 +56,17 @@ const SideBar = ({ open, setOpen }) => {
           boxSizing: "border-box",
           width: "240px",
           p: "20px",
-          pt: "80px",
+          pt: "70px",
         },
       }}
     >
       <Box className="filter">
-        <Button onClick={() => dispatch(clearFilters())}>
-          Clear all Filters
-        </Button>
+        <Header>
+          <h3>Items: {products.length}</h3>
+          <Button onClick={() => dispatch(clearFilters())}>
+            Clear all Filters
+          </Button>
+        </Header>
         <Color filter={filters.color} handleChange={handleChange} />
         <Gender filter={filters.gender} handleChange={handleChange} />
         <Type filter={filters.type} handleChange={handleChange} />
